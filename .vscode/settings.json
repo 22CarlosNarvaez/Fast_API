@@ -1,3 +1,5 @@
 {
-    "python.analysis.extraPaths": ["${workspaceFolder}"]
+    "python.analysis.extraPaths": ["${workspaceFolder}"],
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true
 }
