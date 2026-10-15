@@ -3,7 +3,6 @@ from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
 
 import certifi
 
-
 # URI de conexión a la base de datos MongoDB
 MONGO_URI = (
     "mongodb+srv://carlosarturon2020_db_user:4LgLtY72YQ8BIuVq"
