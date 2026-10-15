@@ -1,6 +1,6 @@
-from bson import ObjectId
+from bson import ObjectId # noqa: F401
 from src.models.database import collection
-from src.models.model import TraineeModel, TraineeUpdateModel
+from src.models.model import TraineeModel, TraineeUpdateModel # noqa: F401
 
 
 def helper_trainee(trainee) -> dict:
@@ -13,7 +13,7 @@ def helper_trainee(trainee) -> dict:
         "age": trainee["age"],
         "program": trainee["program"],
         "record_number": trainee["record_number"],
-    }
+        }
 
 
 def create_trainee(trainee: TraineeModel):
