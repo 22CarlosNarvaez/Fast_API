@@ -71,6 +71,7 @@ proton-vpn-cli==1.0.5
 proton-vpn-daemon==0.13.8
 proton-vpn-gtk-app==4.18.6
 psutil==5.9.8
+pydantic[email]
 ptyprocess==0.7.0
 pyasyncore==1.0.2
 pycairo==1.25.1
