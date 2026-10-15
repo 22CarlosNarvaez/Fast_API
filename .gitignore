@@ -4,3 +4,4 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 structure.sh
+__init__.py
