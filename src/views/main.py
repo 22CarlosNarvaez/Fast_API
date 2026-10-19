@@ -18,6 +18,10 @@ app = FastAPI(
 
 
 # endpoints de la API para la gestión de aprendices
+# mensaje de bienvenida a la API
+@app.get("/")
+async def root():
+    return {"message": "Bienvenido a la API de gestión de aprendices"}
 
 
 # crear un nuevo aprendiz
@@ -72,12 +76,6 @@ def eliminar(trainee_id: str):
             detail="ID de aprendiz no encontrado",
         )
     return delete_trainee(trainee_id)
-
-
-# mensaje de bienvenida a la API
-@app.get("/")
-async def root():
-    return {"message": "Bienvenido a la API de gestión de aprendices"}
 
 
 # uvicorn src.views.main:app --reload
