@@ -9,8 +9,10 @@ router = APIRouter()
 def database_health(request: Request) -> dict[str, str]:
     database: Database | None = getattr(request.app.state, "database", None)
     if database is None:
-        raise HTTPException(status_code=503, detail=("Base de datos"
-                                                     "no disponible"))
+        raise HTTPException(
+            status_code=503,
+            detail="Base de datos no disponible. Define MONGO_URL.",
+        )
 
     try:
         database.command("ping")

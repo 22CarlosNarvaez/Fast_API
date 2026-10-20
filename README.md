@@ -1,37 +1,49 @@
-# API FastAPI conectada a MongoDB
+# API y consola de aprendices
 
-La conexión está centralizada en `src/database.py`. Al iniciar, FastAPI carga
-`.env`, crea el cliente de MongoDB y verifica la conexión con `ping`. La base y
-colección predeterminadas conservan los nombres del proyecto: `amb703.mesa`.
+API REST con FastAPI y MongoDB. La consola usa `requests` para llamar todas las
+rutas: inicio, estado de la base de datos y operaciones CRUD de aprendices.
 
 ## Configuración
 
-Define la URI en el `.env` existente, sin escribir credenciales en el código:
-
-```env
-MONGO_URL=mongodb+srv://usuario:contraseña@cluster.mongodb.net/?appName=FastAPI
-```
-
-Si tu base o colección tienen otros nombres, puedes configurarlos así:
-
-```env
-MONGO_DB_NAME=amb703
-MONGO_COLLECTION_NAME=mesa
-```
-
-En MongoDB Atlas, confirma que el usuario tenga permisos para la base y que la
-IP desde la que ejecutas la aplicación esté permitida en Network Access.
-
-## Instalar y ejecutar
+Instala las dependencias y configura la URI de MongoDB como variable de entorno:
 
 ```bash
-pip install -r requirements.txt
-uvicorn src.main:app --reload
+python3 -m pip install -r requirements.txt
+export MONGO_URL='mongodb+srv://usuario:contraseña@cluster.mongodb.net/'
 ```
 
-La ruta `GET /health/db` devuelve el estado de la conexión. Las pruebas se
-ejecutan sin acceder a MongoDB:
+Opcionalmente, puedes definir `MONGO_DB_NAME` (predeterminado `amb703`) y
+`MONGO_COLLECTION_NAME` (predeterminado `trainee`). La consola apunta por
+defecto a `https://fast-api-97xd.onrender.com`; para consumir una instancia
+local, configura `API_BASE_URL=http://127.0.0.1:8000`.
+
+## Ejecutar
+
+En una terminal, inicia la API:
 
 ```bash
-python -m unittest discover -s test
+uvicorn src.views.main:app --reload
+```
+
+En otra terminal, abre la consola interactiva:
+
+```bash
+python3 -m src.views.views
+```
+
+El menú incluye `GET /`, `GET /health/db`, `GET /trainees`, `POST /trainees`,
+`GET /trainees/{trainee_id}`, `PUT /trainees/{trainee_id}` y
+`DELETE /trainees/{trainee_id}`. La documentación interactiva de FastAPI está
+disponible en `http://127.0.0.1:8000/docs`.
+
+Sin `MONGO_URL`, la API puede iniciar, pero los endpoints de base de datos
+responden con HTTP 503 y un mensaje de configuración.
+
+## Pruebas
+
+Las pruebas de la consola no realizan llamadas reales a la API ni acceden a
+MongoDB:
+
+```bash
+python3 -m unittest discover -s test -v
 ```

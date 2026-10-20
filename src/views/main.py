@@ -1,5 +1,6 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 
+from src.models.database import database
 from src.models.model import TraineeModel, TraineeUpdateModel
 from src.templates.controllers import (
     create_trainee,
@@ -8,6 +9,7 @@ from src.templates.controllers import (
     get_trainee_by_id,
     update_trainee,
 )
+from src.views.health import router as health_router
 
 app = FastAPI(
     title="Gestión de datos de los aprendices",
@@ -15,24 +17,26 @@ app = FastAPI(
                 "los datos de los aprendices",
     version="1.0.0",
 )
+app.state.database = database
+app.include_router(health_router)
 
 
 # endpoints de la API para la gestión de aprendices
 # mensaje de bienvenida a la API
 @app.get("/")
-async def root():
-    return {"message": "API simple con FastApi y  desplegada con RENDER"}
+def root() -> dict[str, str]:
+    return {"message": "API simple con FastAPI para gestionar aprendices"}
 
 
 # crear un nuevo aprendiz
 @app.post("/trainees", response_description="Crea un nuevo aprendiz")
-def crear(trainee: TraineeModel):
+def crear(trainee: TraineeModel) -> dict:
     return create_trainee(trainee)
 
 
 # obtener la lista de aprendices
 @app.get("/trainees", response_description="Lista todos los aprendices")
-def listar():
+def listar() -> list[dict]:
     return get_all_trainees()
 
 
@@ -42,11 +46,6 @@ def listar():
     response_description="Obtiene un aprendiz por su ID",
 )
 def obtener(trainee_id: str):
-    if not trainee_id:
-        raise HTTPException(
-            status_code=404,
-            detail="ID de aprendiz no encontrado",
-        )
     return get_trainee_by_id(trainee_id)
 
 
@@ -56,11 +55,6 @@ def obtener(trainee_id: str):
     response_description="Actualiza un aprendiz por su ID",
 )
 def actualizar(trainee_id: str, trainee: TraineeUpdateModel):
-    if not trainee_id:
-        raise HTTPException(
-            status_code=404,
-            detail="ID de aprendiz no encontrado",
-        )
     return update_trainee(trainee_id, trainee)
 
 
@@ -70,11 +64,6 @@ def actualizar(trainee_id: str, trainee: TraineeUpdateModel):
     response_description="Elimina un aprendiz por su ID",
 )
 def eliminar(trainee_id: str):
-    if not trainee_id:
-        raise HTTPException(
-            status_code=404,
-            detail="ID de aprendiz no encontrado",
-        )
     return delete_trainee(trainee_id)
 
 

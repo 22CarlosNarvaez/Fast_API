@@ -1,28 +1,20 @@
+import os
+
+import certifi
 from pymongo import MongoClient
-from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
+from pymongo.database import Database
 
-# agregamos la URI de conexión a tu base de datos MongoDB
-# cSpell:disable-next-line
-MONGO_URI = (
-    "mongodb+srv://carlosarturon2020_db_user:"
-    "4LgLtY72YQ8BIuVq@fastapi.kenyrka.mongodb.net/"
-    "?appName=FastAPI"
-)
+MONGO_URI = os.getenv("MONGO_URL")
 
-# Crear una instancia del cliente mongo y asignar tiempo de espera para la
-# selección del servidor
-client = MongoClient(
-    # 15 segundos (antes 3000, muy poco para Atlas)
-    MONGO_URI,
-    serverSelectionTimeoutMS=15000,
-)
+client: MongoClient | None = None
+database: Database | None = None
+collection = None
 
-# crear la base datos y la coleccion
-db = client.amb703
-collection = db.trainee
-
-try:
-    client.admin.command("ping")  # prueba la conexión
-    print("Conexion exitosa a MongoDB")
-except (ConnectionFailure, ServerSelectionTimeoutError) as e:
-    print("Error de conexión a MongoDB:", e)
+if MONGO_URI:
+    client = MongoClient(
+        MONGO_URI,
+        serverSelectionTimeoutMS=5000,
+        tlsCAFile=certifi.where(),
+    )
+    database = client[os.getenv("MONGO_DB_NAME", "amb703")]
+    collection = database[os.getenv("MONGO_COLLECTION_NAME", "trainee")]
