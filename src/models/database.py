@@ -26,4 +26,3 @@ try:
     print("Conexion exitosa a MongoDB")
 except (ConnectionFailure, ServerSelectionTimeoutError) as e:
     print("Error de conexión a MongoDB:", e)
-
