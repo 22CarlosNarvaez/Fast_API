@@ -4,7 +4,9 @@ import certifi
 from pymongo import MongoClient
 from pymongo.database import Database
 
-MONGO_URI = os.getenv("MONGO_URL")
+MONGO_URI = os.getenv("mongodb+srv://carlosarturon2020_db_user:"
+                      "4LgLtY72YQ8BIuVq@fastapi.kenyrka.mongodb.net/"
+                      "?appName=FastAPI")
 
 client: MongoClient | None = None
 database: Database | None = None

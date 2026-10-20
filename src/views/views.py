@@ -142,20 +142,15 @@ def show_home():
     show_result(send_request("GET", "/"))
 
 
-def check_database():
-    show_result(send_request("GET", "/health/db"))
-
-
 # ---------- menu ----------
 
 OPTIONS = {
     "1": ("Inicio de la API", show_home),
-    "2": ("Estado de MongoDB", check_database),
-    "3": ("Crear aprendiz", create_trainee),
-    "4": ("Listar aprendices", list_trainees),
-    "5": ("Buscar por ID", get_trainee),
-    "6": ("Actualizar aprendiz", update_trainee),
-    "7": ("Eliminar aprendiz", delete_trainee),
+    "2": ("Crear aprendiz", create_trainee),
+    "3": ("Listar aprendices", list_trainees),
+    "4": ("Buscar por ID", get_trainee),
+    "5": ("Actualizar aprendiz", update_trainee),
+    "6": ("Eliminar aprendiz", delete_trainee),
 }
 
 

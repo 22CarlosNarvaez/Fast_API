@@ -9,7 +9,7 @@ from src.views import views
 
 
 class ConsoleClientTests(unittest.TestCase):
-    def test_console_operations_cover_all_api_endpoints(self):
+    def test_console_operations_cover_all_menu_options(self):
         inputs = [
             "DOC-1",
             "Ana",
@@ -36,7 +36,6 @@ class ConsoleClientTests(unittest.TestCase):
             patch("builtins.input", side_effect=inputs),
         ):
             views.show_home()
-            views.check_database()
             views.create_trainee()
             views.list_trainees()
             views.get_trainee()
@@ -47,7 +46,6 @@ class ConsoleClientTests(unittest.TestCase):
             send_request.call_args_list,
             [
                 call("GET", "/"),
-                call("GET", "/health/db"),
                 call(
                     "POST",
                     "/trainees",
@@ -67,6 +65,12 @@ class ConsoleClientTests(unittest.TestCase):
                 call("DELETE", "/trainees/trainee-id"),
             ],
         )
+
+    def test_menu_options_are_consecutive_without_database_health_option(self):
+        self.assertEqual(list(views.OPTIONS), ["1", "2", "3", "4", "5", "6"])
+        self.assertNotIn("Estado de MongoDB", {
+            label for label, _ in views.OPTIONS.values()
+        })
 
     @patch("src.views.views.requests.request")
     def test_send_request_uses_base_url_json_and_timeout(self, request):

@@ -177,12 +177,11 @@ Al ejecutar `python -m src.views.views`, aparece un menú:
 
 ```text
 1. Inicio de la API
-2. Estado de MongoDB
-3. Crear aprendiz
-4. Listar aprendices
-5. Buscar por ID
-6. Actualizar aprendiz
-7. Eliminar aprendiz
+2. Crear aprendiz
+3. Listar aprendices
+4. Buscar por ID
+5. Actualizar aprendiz
+6. Eliminar aprendiz
 0. Salir
 ```
 
